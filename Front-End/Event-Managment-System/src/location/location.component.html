@@ -1,0 +1,128 @@
+<div class="location-create-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>ახალი ლოკაციის შექმნა</h2>
+    </div>
+        
+    <div class="card-body">
+      <!-- Message Display -->
+      <div *ngIf="message"
+           class="alert"
+           [ngClass]="{'alert-success': messageType === 'success', 'alert-error': messageType === 'error'}">
+        {{ message }}
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+        
+        <!-- ID Field წაშლილია - ავტომატურად გენერირდება -->
+        
+        <!-- Name Field -->
+        <div class="form-group">
+          <label for="name">სახელი *</label>
+          <input 
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [ngClass]="{'is-invalid': isFieldInvalid('name')}"
+            placeholder="ლოკაციის სახელი">
+          <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
+            {{ getFieldError('name') }}
+          </div>
+        </div>
+
+        <!-- Address Field -->
+        <div class="form-group">
+          <label for="address">მისამართი *</label>
+          <input 
+            type="text"
+            id="address"
+            formControlName="address"
+            class="form-control"
+            [ngClass]="{'is-invalid': isFieldInvalid('address')}"
+            placeholder="მისამართი">
+          <div *ngIf="isFieldInvalid('address')" class="invalid-feedback">
+            {{ getFieldError('address') }}
+          </div>
+        </div>
+
+        <!-- City Field -->
+        <div class="form-group">
+          <label for="city">ქალაქი *</label>
+          <input 
+            type="text"
+            id="city"
+            formControlName="city"
+            class="form-control"
+            [ngClass]="{'is-invalid': isFieldInvalid('city')}"
+            placeholder="ქალაქი">
+          <div *ngIf="isFieldInvalid('city')" class="invalid-feedback">
+            {{ getFieldError('city') }}
+          </div>
+        </div>
+
+  
+<!-- Country Field -->
+<!-- Country Field - Custom Dropdown -->
+<div class="form-group">
+  <label for="country">ქვეყანა *</label>
+  <div class="custom-dropdown" [ngClass]="{'is-invalid': isFieldInvalid('country')}">
+    <div class="dropdown-header" (click)="toggleDropdown()">
+      <span *ngIf="selectedCountry; else placeholder">
+        <span class="flag">{{ selectedCountry.flag }}</span>
+        {{ selectedCountry.name }}
+      </span>
+      <ng-template #placeholder>
+        <span class="text-muted">🌍 აირჩიე ქვეყანა</span>
+      </ng-template>
+      <span class="dropdown-arrow">▼</span>
+    </div>
+    <div class="dropdown-list" *ngIf="isDropdownOpen">
+      <div 
+        *ngFor="let country of countries" 
+        class="dropdown-item"
+        (click)="selectCountry(country)">
+        <span class="flag">{{ country.flag }}</span>
+        {{ country.name }}
+      </div>
+    </div>
+  </div>
+  <input type="hidden" formControlName="country">
+  <div *ngIf="isFieldInvalid('country')" class="invalid-feedback d-block">
+    {{ getFieldError('country') }}
+  </div>
+</div>
+        <!-- ZipCode Field (Optional) -->
+        <div class="form-group">
+          <label for="zipCode">საფოსტო კოდი</label>
+          <input 
+            type="text"
+            id="zipCode"
+            formControlName="zipCode"
+            class="form-control"
+            placeholder="საფოსტო კოდი (არჩევითი)">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button 
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="locationForm.invalid || isLoading">
+            <span *ngIf="isLoading" class="spinner"></span>
+            {{ isLoading ? 'იქმნება...' : 'ლოკაციის შექმნა' }}
+          </button>
+                    
+          <button 
+            type="button"
+            class="btn btn-secondary"
+            (click)="onReset()"
+            [disabled]="isLoading">
+            გასუფთავება
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

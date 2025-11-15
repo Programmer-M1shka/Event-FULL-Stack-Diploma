@@ -1,0 +1,508 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-feature-settings: "kern";
+  text-rendering: optimizeLegibility;
+}
+
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: var(--primary-gradient);
+  color: #fff;
+}
+
+
+.container h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+.container > button {
+  display: block;
+  margin: 0 auto 2rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(231, 229, 228, 0.4);
+  transition: all 0.3s ease;
+}
+
+.container > button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(240, 237, 237, 0.6);
+}
+
+
+.container > div {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.4s ease;
+}
+
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+
+label {
+  font-weight: 600;
+  color: #ffffffcc;
+  font-size: 1rem;
+}
+
+
+input, textarea {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #f1f1f1;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  transform: translateY(-1px);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+
+button[type="submit"] {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  padding: 1rem;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.3);
+}
+
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.5s ease;
+}
+
+li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+li strong {
+  color: #fff;
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+li em {
+  color: #c0c0c0;
+  font-style: italic;
+  font-size: 0.95rem;
+  display: block;
+}
+
+
+.event-id {
+  font-style: normal;
+  font-weight: bold;
+  color: #ffd700;
+  margin-top: 0.3rem;
+  font-size: 1rem;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .container h2 {
+    font-size: 2rem;
+  }
+
+  .container > button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .container > div {
+    padding: 1.5rem;
+  }
+
+  input, textarea {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+}
+/* Photo Upload Styles */
+.photo-input {
+  border: 2px dashed rgba(255, 255, 255, 0.4) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 2rem !important;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.photo-input:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.photo-input::before {
+  content: '📸 ფოტოს ასარჩევად დაკლიკეთ';
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  pointer-events: none;
+}
+
+.photo-hint {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Photo Preview Styles */
+.photo-preview {
+  position: relative;
+  margin-top: 1rem;
+  display: inline-block;
+  animation: photoFadeIn 0.3s ease-out;
+}
+
+.preview-image {
+  max-width: 250px;
+  max-height: 250px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.preview-image:hover {
+  transform: scale(1.02);
+}
+
+.remove-photo-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 59, 59, 0.9);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.remove-photo-btn:hover {
+  background: rgba(255, 59, 59, 1);
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(255, 59, 59, 0.4);
+}
+
+/* Event Photo in List */
+.event-photo-container {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.event-photo {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.event-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Animation for photo appearance */
+@keyframes photoFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Mobile responsiveness for photo */
+@media (max-width: 768px) {
+  .photo-input {
+    padding: 1.5rem !important;
+  }
+  
+  .photo-input::before {
+    font-size: 0.9rem;
+  }
+  
+  .preview-image {
+    max-width: 200px;
+    max-height: 200px;
+  }
+  
+  .event-photo {
+    max-height: 150px;
+  }
+  
+  .photo-hint {
+    font-size: 0.8rem;
+  }
+}
+/* Select dropdown სტაილები */
+select {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  appearance: none; /* ნაცრისფერი dropdown arrow-ის მოშორება */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 20px;
+  padding-right: 3rem; /* სივრცე dropdown arrow-სთვის */
+}
+
+select:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  transform: translateY(-1px);
+}
+
+select:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Select options */
+select option {
+  background-color: #2c3e50;
+  color: #fff;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+select option:hover,
+select option:checked {
+  background-color: #34495e;
+}
+
+/* Default option style */
+select option[value=""] {
+  color: #bdc3c7;
+  font-style: italic;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #ffffffcc;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Error styling */
+.error {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Info styling */
+.info {
+  color: #74b9ff;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading state */
+.info::before {
+  content: "⏳ ";
+  margin-right: 0.3rem;
+}
+
+/* Error message styling */
+.error-message {
+  background: rgba(255, 107, 107, 0.15);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  color: #ff6b6b;
+  padding: 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  font-weight: 500;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+/* No events message */
+.no-events {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Loading spinner */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+}
+
+.loading::before {
+  content: "⏳";
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  select {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    background-size: 18px;
+    padding-right: 2.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .error, .info {
+    font-size: 0.8rem;
+  }
+}

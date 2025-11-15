@@ -1,0 +1,306 @@
+
+<div class="participants-container">
+  <div class="header-section">
+    <h1 class="main-title">
+      <span class="title-icon">👥</span>
+      მონაწილეების მართვა
+    </h1>
+    <p class="subtitle">მართეთ ღონისძიების მონაწილეები მარტივად</p>
+  </div>
+
+
+  <div *ngIf="error" class="alert alert-danger">
+    <div class="alert-content">
+      <span class="alert-icon">⚠️</span>
+      <span class="alert-text">{{ error }}</span>
+    </div>
+    <button type="button" class="alert-close" (click)="clearError()">
+      <span>×</span>
+    </button>
+  </div>
+
+ 
+  <div *ngIf="loading" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  
+<div class="glass-card">
+  <div class="card-header">
+    <div class="header-content">
+      <span class="header-icon">🔍</span>
+      <h3>მონაწილის პოვნა</h3>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="search-section">
+      <div class="input-group">
+        <div class="form-floating">
+          <select
+            id="participantSelect"
+            class="form-control"
+            (change)="getParticipantById(+$any($event.target).value)"
+            [disabled]="loading"
+          >
+            <option [value]="0" disabled selected>
+              {{ getParticipants.length ? 'აირჩიე მონაწილე' : 'მონაწილეები არ არსებობს' }}
+            </option>
+            <option *ngFor="let p of getParticipants" [value]="p.id">
+              #{{ p.id }} - {{ p.user?.firstName }} {{ p.user?.lastName }} ({{ p.eventTitle }})
+            </option>
+          </select>
+          <label for="participantSelect">მონაწილე</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="glass-card">
+    <div class="card-header">
+      <div class="header-content">
+        <span class="header-icon">✨</span>
+        <h3>დაარეგისტრე ახალი მონაწილე</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="registerParticipant()" #registrationForm="ngForm" class="registration-form">
+        <div class="form-grid">
+          <div class="form-floating">
+  <select
+    id="eventId"
+    name="eventId"
+    class="form-control"
+    [(ngModel)]="registrationData.eventId"
+    required
+  >
+    <option [value]="0" disabled selected>აირჩიე ღონისძიება</option>
+    <option *ngFor="let event of events" [value]="event.id">
+      🎪 {{ event.title }} - {{ event.startDate | date:'short' }} 
+    </option>
+  </select>
+  <label for="eventId">Event *</label>
+</div>
+
+        <div class="form-floating">
+  <select
+    id="userId"
+    name="userId"
+    class="form-control"
+    [(ngModel)]="registrationData.userId"
+    required
+  >
+    <option [value]="0" disabled selected>აირჩიე მომხმარებელი</option>
+    <option *ngFor="let user of users" [value]="user.id">
+      {{ user.firstName}} ({{ user.email }})
+    </option>
+  </select>
+  <label for="userId">User *</label>
+</div>
+
+
+          <!-- <div class="form-floating">
+            <input
+              type="number"
+              id="ticketId"
+              name="ticketId"
+              class="form-control"
+              [(ngModel)]="registrationData.ticketId"
+              placeholder=""
+              min="1"
+            />
+            <label for="ticketId">Ticket ID</label>
+          </div> -->
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-success btn-register"
+            [disabled]="loading || !registrationForm.form.valid"
+          >
+            <span class="btn-icon">🎯</span>
+            Register Participant
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="resetRegistrationForm()">
+            <span class="btn-icon">🔄</span>
+            Reset Form
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <div *ngIf="selectedParticipant" class="glass-card participant-details">
+    <div class="card-header">
+      <div class="header-content">
+        <span class="header-icon">👤</span>
+        <h3>მონაწილის დეტალები</h3>
+      </div>
+      <button type="button" class="btn btn-ghost" (click)="clearSelection()">
+        <span>×</span>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="details-grid">
+        <div class="detail-item">
+          <div class="detail-label">ID</div>
+          <div class="detail-value">{{ selectedParticipant.id }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">Event ID</div>
+          <div class="detail-value">{{ selectedParticipant.eventId }}</div>
+        </div>
+
+        <div class="detail-item full-width">
+          <div class="detail-label">Event Title</div>
+          <div class="detail-value event-title">{{ selectedParticipant.eventTitle }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">Registration Date</div>
+          <div class="detail-value">{{ selectedParticipant.registrationDate | date:'medium' }}</div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-label">Attendance</div>
+          <div class="detail-value">
+            <span
+              class="status-badge"
+              [class.present]="selectedParticipant.attendance"
+              [class.absent]="!selectedParticipant.attendance"
+            >
+              {{ selectedParticipant.attendance ? '✅ Present' : '❌ Absent' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="attendance-toggle-section">
+        <button 
+          type="button" 
+          class="btn btn-warning" 
+          (click)="toggleAttendance()" 
+          [disabled]="!selectedParticipant || loading"
+        >
+          <span class="btn-icon">🔄</span>
+          დასწრების შეცვლა
+        </button>
+      </div>
+
+      
+      <div class="action-buttons">
+        <button type="button" class="btn btn-calendar" (click)="addToCalendar()">
+          <span class="btn-icon">📅</span>
+          Add to Calendar
+        </button>
+        
+        <div class="social-share">
+          <span class="share-label">Share:</span>
+          <button type="button" class="btn btn-social facebook" (click)="shareOnSocial('facebook')">
+            📘 Facebook
+          </button>
+          <button type="button" class="btn btn-social twitter" (click)="shareOnSocial('twitter')">
+            🐦 Twitter
+          </button>
+          <button type="button" class="btn btn-social linkedin" (click)="shareOnSocial('linkedin')">
+            💼 LinkedIn
+          </button>
+        </div>
+      </div>
+
+     
+      <div class="rating-section">
+        <h4>შეფასე ეს ღონისძიება</h4>
+        
+        
+        <div *ngIf="getParticipantRatings().length > 0" class="existing-rating">
+          <div *ngFor="let existingRating of getParticipantRatings()" class="rating-display">
+            <p><strong>Your Rating:</strong> 
+              <span class="stars">
+                <span *ngFor="let star of [1,2,3,4,5]" 
+                      [class.active]="star <= existingRating.rating">⭐</span>
+              </span>
+              ({{ existingRating.rating }}/5)
+            </p>
+            <p *ngIf="existingRating.comment"><strong>Comment:</strong> {{ existingRating.comment }}</p>
+            <p class="rating-date">Rated on: {{ existingRating.createdAt | date:'medium' }}</p>
+          </div>
+        </div>
+
+        <div class="rating-form">
+          <div class="star-rating">
+            <span 
+              *ngFor="let star of [1,2,3,4,5]" 
+              class="star" 
+              [class.active]="star <= rating"
+              (click)="rating = star"
+              >⭐</span>
+          </div>
+          <div class="form-floating">
+            <textarea
+              class="form-control"
+              id="ratingComment"
+              [(ngModel)]="ratingComment"
+              placeholder="Leave a comment (optional)"
+              rows="3"
+            ></textarea>
+            <label for="ratingComment">Comment (Optional)</label>
+          </div>
+          <button 
+            type="button" 
+            class="btn btn-rating" 
+            (click)="submitRating()"
+            [disabled]="rating === 0 || loading"
+          >
+            <span class="btn-icon">💬</span>
+            {{ getParticipantRatings().length > 0 ? 'Update Rating' : 'Submit Rating' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="participants.length > 0" class="glass-card">
+    <div class="card-header">
+      <div class="header-content">
+        <span class="header-icon">📋</span>
+        <h3>Recently Registered</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="participants-grid">
+        <div
+          *ngFor="let participant of participants"
+          class="participant-card"
+          (click)="selectedParticipant = participant"
+        >
+          <div class="participant-header">
+            <div class="participant-id">#{{ participant.id }}</div>
+            <div
+              class="status-badge"
+              [class.present]="participant.attendance"
+              [class.absent]="!participant.attendance"
+            >
+              {{ participant.attendance ? '✅' : '❌' }}
+            </div>
+          </div>
+          <div class="participant-info">
+            <h4>{{ participant.eventTitle }}</h4>
+            <p class="date">{{ participant.registrationDate | date:'short' }}</p>
+          </div>
+          <div class="participant-action">
+            <span class="view-details">View Details →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

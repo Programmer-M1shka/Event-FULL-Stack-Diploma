@@ -1,0 +1,1809 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EventProject",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Analytics/sales-summary": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/daily-sales": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/event/{eventId}/sales": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/top-events": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/mark-attendance": {
+      "post": {
+        "tags": [
+          "Analytics"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAttendanceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAttendanceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkAttendanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/event/{eventId}/attendance": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/attendance-stats": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/user-activity": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/popular-event-types": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/purchase-patterns": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/repeat-customers": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Analytics/monthly-trends": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/get-all-admins": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/assign-admin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/remove-admin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignAdminDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/resend-code": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/get-all-users": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/verify-email": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/get-profile": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/forgot-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/verify-reset-code": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Auth/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Events/all": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Events/{id}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Events"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Events": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Events/locations": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Location/create-location": {
+      "post": {
+        "tags": [
+          "Location"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Participants/{id}": {
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Participants/all": {
+      "get": {
+        "tags": [
+          "Participants"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Participants/register": {
+      "post": {
+        "tags": [
+          "Participants"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterParticipantDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterParticipantDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterParticipantDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Participants/{id}/attendance": {
+      "put": {
+        "tags": [
+          "Participants"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttendanceUpdateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttendanceUpdateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttendanceUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tickets/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tickets": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTicketDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tickets/purchase": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePurchaseDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePurchaseDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePurchaseDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Tickets/event/{eventId}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tickets/validate": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AssignAdminDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttendanceUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "attendance": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateEventDTO": {
+        "required": [
+          "description",
+          "endDate",
+          "organizerId",
+          "startDate",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "locationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "organizerId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePurchaseDTO": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketType": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "promoCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateTicketDTO": {
+        "required": [
+          "eventId",
+          "price",
+          "quantity",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "price": {
+            "minimum": 0.01,
+            "type": "number",
+            "format": "double"
+          },
+          "quantity": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmailDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Event": {
+        "required": [
+          "capacity",
+          "description",
+          "endDate",
+          "organizerId",
+          "startDate",
+          "status",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "locationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          },
+          "organizerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "organizer": {
+            "$ref": "#/components/schemas/User"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EventStatus"
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ticket"
+            },
+            "nullable": true
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Participant"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EventStatus": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Location": {
+        "required": [
+          "address",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LocationCreateDTO": {
+        "required": [
+          "address",
+          "city",
+          "country",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LocationDTO": {
+        "required": [
+          "address",
+          "city",
+          "country",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "address": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MarkAttendanceRequest": {
+        "type": "object",
+        "properties": {
+          "participantId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isPresent": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Participant": {
+        "required": [
+          "eventId",
+          "registrationDate",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "registrationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attendance": {
+            "type": "boolean"
+          },
+          "event": {
+            "$ref": "#/components/schemas/Event"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "ticket": {
+            "$ref": "#/components/schemas/Ticket"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ParticipantDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "eventTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ticketType": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "attendance": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Purchase": {
+        "required": [
+          "purchaseDate",
+          "quantity",
+          "status",
+          "ticketId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PurchaseStatus"
+          },
+          "ticket": {
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PurchaseStatus": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "RegisterParticipantDTO": {
+        "required": [
+          "eventId",
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResetPasswordDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ticket": {
+        "required": [
+          "price",
+          "quantity",
+          "status",
+          "totalAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "eventId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TicketStatus"
+          },
+          "event": {
+            "$ref": "#/components/schemas/Event"
+          },
+          "purchases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Purchase"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketStatus": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "UpdateEventDTO": {
+        "required": [
+          "capacity",
+          "endDate",
+          "locationId",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "locationId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "capacity": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "required": [
+          "email",
+          "passwordHash",
+          "role",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "username": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "passwordHash": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/UserRole"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasConfirmed": {
+            "type": "boolean"
+          },
+          "confirmationCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "passwordResetCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "passwordResetCodeExpiry": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "organizedEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "nullable": true
+          },
+          "purchases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Purchase"
+            },
+            "nullable": true
+          },
+          "participations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Participant"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDTO": {
+        "required": [
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string",
+            "format": "password"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRole": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "VerifyDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

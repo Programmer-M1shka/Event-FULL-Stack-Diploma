@@ -1,0 +1,328 @@
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  font-family: 'Poppins', sans-serif;
+   background: var(--primary-gradient);
+  min-height: 100vh;
+  color: #f8f9fa;
+}
+
+
+h1 {
+  text-align: center;
+  font-size: 2.8em;
+  color: #ffffff;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+
+.section {
+  background: var(--primary-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  transition: transform 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  color: #ffeb3b;
+  border-bottom: 2px dashed #ffffff50;
+  padding-bottom: 10px;
+}
+
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+
+input, textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+}
+input::placeholder,
+textarea::placeholder {
+  color: #f8f9fa;            
+  opacity: 1;                
+  font-weight: 500;         
+  letter-spacing: 0.5px;    
+  font-size: 1em;           
+}
+
+
+
+button {
+  padding: 14px 30px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.btn-create {
+  background: linear-gradient(45deg, #43e97b, #38f9d7);
+  color: #000;
+  width: 100%;
+}
+
+.btn-create:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(56, 249, 215, 0.3);
+}
+
+.btn-purchase {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: #fff;
+  width: 100%;
+}
+
+.btn-purchase:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 75, 43, 0.3);
+}
+
+.btn-search {
+  background: linear-gradient(45deg, #f7971e, #ffd200);
+  color: #111;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.btn-search:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 210, 0, 0.3);
+}
+
+
+.purchase-result {
+  background: rgba(40, 167, 69, 0.1);
+  border-left: 5px solid #28a745;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  color: #d4edda;
+}
+
+.purchase-result h3 {
+  color: #28a745;
+}
+
+
+.ticket-details {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  border-left: 4px solid #ffc107;
+}
+
+.ticket-details p {
+  margin: 8px 0;
+  font-size: 1.1em;
+  color: #f1f1f1;
+}
+
+
+.qr-section {
+  background: rgba(33, 150, 243, 0.1);
+  border: 1px solid #2196f3;
+}
+
+.qr-display {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.qr-container {
+  display: inline-block;
+  padding: 20px;
+  background: #fff;
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.qr-image, .qr-canvas {
+  max-width: 220px;
+  margin: 0 auto;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.qr-image:hover, .qr-canvas:hover {
+  transform: scale(1.1);
+}
+
+.btn-download, .btn-clear, .btn-qr, .btn-provider {
+  margin: 8px;
+  border-radius: 10px;
+  padding: 12px 20px;
+}
+
+.btn-download {
+  background: linear-gradient(45deg, #00c9ff, #92fe9d);
+  color: #000;
+}
+
+.btn-clear {
+  background: linear-gradient(45deg, #f85032, #e73827);
+  color: #fff;
+}
+
+.btn-provider {
+  background: linear-gradient(45deg, #9d50bb, #6e48aa);
+  color: #fff;
+}
+
+.qr-data pre {
+  background: #2d2d2d;
+  color: #c3f3ff;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .btn-download, .btn-clear {
+    width: 100%;
+  }
+
+  input[type="number"] + button {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #f1f1f1;
+  font-size: 1.05em;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #e0e0e0;
+  opacity: 1;
+  font-weight: 500;
+}
+ .form-group {
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f1e6e6;
+            font-size: 16px;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+              background: rgba(255, 255, 255, 0.2);
+            color: #e6e0e0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23666" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #48515a;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-group select:hover {
+            border-color: #c6c9cc;
+        }
+
+        /* სტილი ოფშენებისთვის */
+        .form-group select option {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* VIP ოფშენის სტილი */
+        .form-group select option[value="VIP"] {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        /* Standard ოფშენის სტილი */
+        .form-group select option[value="Standard"] {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+
+        /* Premium ოფშენის სტილი */
+        .form-group select option[value="Premium"] {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }

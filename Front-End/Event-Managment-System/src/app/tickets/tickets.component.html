@@ -1,0 +1,198 @@
+<div class="container">
+  <h1>🎟️ ბილეთების მართვა</h1>
+
+  <div class="section" *ngIf="isAdmin()">
+  <h2>➕ ბილეთის შექმნა</h2>
+  <form [formGroup]="createForm">
+    <!-- Event Selection Dropdown -->
+    <div class="form-group">
+      <label for="eventSelect">🎯 ივენთის არჩევა:</label>
+      <select id="eventSelect" formControlName="eventId" required>
+        <option value="" disabled>
+          {{ isLoadingEvents ? 'ივენთები იტვირთება...' : 'აირჩიეთ ივენთი' }}
+        </option>
+        <option *ngFor="let event of events" [value]="event.id">
+          🎪 {{ event.title }} - {{ event.startDate | date:'short' }} ({{ event.status }})
+        </option>
+      </select>
+      <div *ngIf="isLoadingEvents" class="loading-indicator">
+        <small>⏳ ივენთები იტვირთება...</small>
+      </div>
+      <div *ngIf="!isLoadingEvents && events.length === 0" class="no-events">
+        <small>❌ ივენთები ვერ მოიძებნა</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="ticketType">🎫 ტიპი:</label>
+      <select id="ticketType" name="type" formControlName="type" required>
+        <option value="" disabled selected>აირჩიეთ ტიკეტის ტიპი</option>
+        <option value="VIP">👑 VIP</option>
+        <option value="Standard">🎫 Standard</option>
+        <option value="Premium">⭐ Premium</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>💰 ფასი:</label>
+      <input type="number" formControlName="price" placeholder="შეიყვანეთ ფასი" min="1">
+    </div>
+    
+    <div class="form-group">
+      <label>📦 რაოდენობა:</label>
+      <input type="number" formControlName="quantity" placeholder="შეიყვანეთ რაოდენობა" min="1">
+    </div>
+    
+    <button type="button" (click)="onCreateTicket()" class="btn-create">
+      შექმნა
+    </button>
+  </form>
+</div>
+
+
+  <!-- ბილეთის შეძენა - შეცვლილი ლოგიკა -->
+  <div class="section">
+    <h2>🛒 ბილეთის შეძენა</h2>
+    <form [formGroup]="purchaseForm">
+      <!-- ივენთის არჩევა -->
+      <div class="form-group">
+        <label for="purchaseEventSelect">🎯 ივენთის არჩევა:</label>
+        <select id="purchaseEventSelect" formControlName="eventId" required>
+          <option value="" disabled>აირჩიეთ ივენთი</option>
+          <option *ngFor="let event of events" [value]="event.id">
+            🎪 {{ event.title }} - {{ event.startDate | date:'short' }}
+          </option>
+        </select>
+      </div>
+
+      <!-- ✅ [disabled] attribute ამოღებულია - ახლა FormControl მართავს disabled state-ს -->
+      <div class="form-group">
+        <label for="purchaseTicketType">🎫 ბილეთის ტიპი:</label>
+        <select id="purchaseTicketType" formControlName="ticketType" required>
+          <option value="" disabled>
+            {{ isLoadingTickets ? 'ბილეთები იტვირთება...' : 'აირჩიეთ ბილეთის ტიპი' }}
+          </option>
+          <option *ngFor="let ticket of availableTickets" [value]="ticket.type">
+            {{ ticket.type }} - {{ ticket.price }}₾ ({{ ticket.quantity }} ხელმისაწვდომია)
+          </option>
+        </select>
+        
+        <!-- Loading indicator for tickets -->
+        <div *ngIf="isLoadingTickets" class="loading-indicator">
+          <small>⏳ ბილეთები იტვირთება...</small>
+        </div>
+        
+        <!-- No tickets message -->
+        <div *ngIf="!isLoadingTickets && purchaseForm.get('eventId')?.value && availableTickets.length === 0" class="no-tickets">
+          <small>❌ ამ ივენთისთვის ხელმისაწვდომი ბილეთები ვერ მოიძებნა</small>
+        </div>
+      </div>
+      
+      <div class="form-group">
+  <label>👤 User</label>
+  <select class="form-select" formControlName="userId">
+    <option [value]="null" disabled selected>აირჩიე მომხმარებელი</option>
+    <option *ngFor="let user of users" [value]="user.id">
+      {{ user.firstName }} ({{ user.email }})
+    </option>
+  </select>
+</div>
+      
+      <div class="form-group">
+        <label>📦 რაოდენობა:</label>
+        <input type="number" formControlName="quantity" placeholder="შეიყვანეთ რაოდენობა" min="1">
+      </div>
+      
+      <div class="form-group">
+        <label>🎁 პრომო კოდი (არასავალდებულო):</label>
+        <input type="text" formControlName="promoCode" placeholder="შეიყვანეთ პრომო კოდი">
+      </div>
+      
+      <button type="button" (click)="onPurchaseTicket()" class="btn-purchase">შეძენა</button>
+    </form>
+
+    <!-- შეძენის შედეგი -->
+    <div *ngIf="lastPurchaseResponse" class="purchase-result">
+      <h3>🎉 შეძენა წარმატებულია!</h3>
+      <p><strong>🎭 ივენთი:</strong> {{ lastPurchaseResponse.eventTitle }}</p>
+      <p><strong>🎫 ტიპი:</strong> {{ lastPurchaseResponse.ticketType }}</p>
+      <p><strong>📦 რაოდენობა:</strong> {{ lastPurchaseResponse.quantity }}</p>
+      <p><strong>💸 ფასდაკლება:</strong> {{ lastPurchaseResponse.discountPercentage }}%</p>
+      <p><strong>💰 სულ გადასახდელი:</strong> {{ lastPurchaseResponse.totalAmount | currency:'GEL':'symbol' }}</p>
+    </div>
+  </div>
+
+  <!-- ბილეთის დეტალები -->
+  <div class="section">
+    <h2>🔍 ბილეთის დეტალები</h2>
+    <div class="form-group">
+      <input type="number" [(ngModel)]="ticketIdToLoad" placeholder="შეიყვანეთ Ticket ID" min="1">
+      <button (click)="onLoadTicket()" type="button" class="btn-search">მოძებნა</button>
+    </div>
+    
+    <div *ngIf="loadedTicket" class="ticket-details">
+      <h3>ბილეთი #{{ loadedTicket.id }}</h3>
+      <p><strong>🎯 Event:</strong> {{ getEventTitle(loadedTicket.eventId) }} (ID: {{ loadedTicket.eventId }})</p>
+      <p><strong>🎫 ტიპი:</strong> {{ loadedTicket.type }}</p>
+      <p><strong>💵 ფასი:</strong> {{ loadedTicket.price }}₾</p>
+      <p><strong>📦 დარჩენილი რაოდენობა:</strong> {{ loadedTicket.quantity }}</p>
+      <p><strong>📊 სტატუსი:</strong> {{ loadedTicket.status }}</p>
+    </div>
+  </div>
+
+  <!-- QR კოდის სექცია -->
+  <div class="section qr-section">
+    <h2>📱 QR კოდის გენერაცია</h2>
+    
+    <!-- ხელით QR კოდის შექმნა -->
+    <div class="form-group">
+      <label>📝 QR კოდისთვის ტექსტი:</label>
+      <textarea 
+        [(ngModel)]="qrCodeData" 
+        placeholder="შეიყვანეთ ტექსტი QR კოდისთვის..."
+        rows="3">
+      </textarea>
+      <button (click)="generateCustomQR()" type="button" class="btn-qr">
+        QR კოდის გენერაცია
+      </button>
+    </div>
+
+    <!-- QR კოდის ჩვენება -->
+    <div *ngIf="generatedQrCode || isQRGenerated" class="qr-display">
+      <h3>🔳 გენერირებული QR კოდი</h3>
+      
+      <div class="qr-container">
+        <img *ngIf="generatedQrCode" [src]="generatedQrCode" alt="QR კოდი" class="qr-image" 
+             (error)="onQRImageError($event)">
+        
+        <div *ngIf="!generatedQrCode && isQRGenerated" class="qr-loading">
+          <p>⏳ QR კოდი იტვირთება...</p>
+        </div>
+      </div>
+      
+      <div class="qr-actions">
+        <button (click)="downloadQRCode()" type="button" class="btn-download">
+          📥 ჩამოტვირთვა
+        </button>
+        <button (click)="clearQRCode()" type="button" class="btn-clear">🗑️ გასუფთავება</button>
+      </div>
+      
+      <!-- QR კოდის მონაცემები -->
+      <div class="qr-data">
+        <h4>📋 QR კოდის შიგთავსი:</h4>
+        <pre>{{ qrCodeData }}</pre>
+      </div>
+    </div>
+
+    <!-- QR კოდის ინფორმაცია -->
+    <div class="qr-info">
+      <h4>ℹ️ QR კოდის შესახებ</h4>
+      <ul>
+        <li>🎫 ბილეთის შექმნის ან შეძენის შემდეგ ავტომატურად იქმნება QR კოდი</li>
+        <li>🔒 QR კოდი შეიცავს ვალიდაციის კოდს და ბილეთის დეტალებს</li>
+        <li>📱 QR კოდი სკანირების საშუალებით შეიძლება ბილეთის ვალიდაცია</li>
+        <li>💾 შეგიძლიათ ჩამოტვირთოთ PNG ფორმატში</li>
+      </ul>
+    </div>
+  </div>
+</div>

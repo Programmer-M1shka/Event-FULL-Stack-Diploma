@@ -1,0 +1,41 @@
+body {
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000000);
+  background-size: 300% 300%;
+  animation: darkShift 12s ease-in-out infinite;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+@keyframes darkShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.modern-success-toast {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.toast-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #065f46;
+  margin: 0;
+}
+
+.toast-progress {
+  background: #10b981 !important;
+  height: 3px !important;
+  border-radius: 2px;
+}

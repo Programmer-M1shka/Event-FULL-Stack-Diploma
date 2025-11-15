@@ -1,0 +1,205 @@
+
+.analytics-container {
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+ background-color: white;
+}
+
+
+.analytics-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.analytics-header h1 {
+  font-size: 2rem;
+  color: #222;
+}
+.analytics-header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.summary-card {
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease;
+}
+.summary-card:hover {
+  transform: translateY(-4px);
+}
+.summary-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.summary-card .amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+.summary-card .sub-amount {
+  font-size: 1rem;
+  color: #28a745;
+}
+
+
+.analytics-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.tab-button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background-color: #e0e0e0;
+  border-radius: 2rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+.tab-button.active,
+.tab-button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+
+.filters-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+.filter-group label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.date-input,
+.select-input,
+.number-input {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-width: 180px;
+}
+
+
+.card {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-header {
+  padding: 1rem;
+  background-color: #f1f1f1;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #ddd;
+}
+.card-body {
+  padding: 1rem;
+}
+
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+
+.table-container {
+  overflow-x: auto;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.data-table th,
+.data-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.data-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+.data-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+.attendance-rate.high {
+  color: #28a745;
+  font-weight: bold;
+}
+.attendance-rate.medium {
+  color: #ffc107;
+  font-weight: bold;
+}
+.attendance-rate.low {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+
+.rank {
+  display: inline-block;
+  background-color: #ffc107;
+  color: #fff;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  line-height: 1.5rem;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+.top-rank td {
+  font-weight: bold;
+  background-color: #fffbe6;
+}
+
+
+.loading {
+  font-style: italic;
+  color: #666;
+}
+
+
+@media (max-width: 768px) {
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .analytics-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

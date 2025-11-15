@@ -1,0 +1,159 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <!-- Logo Section -->
+    <div class="navbar-brand">
+      <a routerLink="/" class="brand-link">
+       <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M4 5a2 2 0 0 0-2 2v2.5a1 1 0 0 0 1 1 1.5 1.5 0 1 1 0 3 1 1 0 0 0-1 1V17a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2.5a1 1 0 0 0-1-1 1.5 1.5 0 1 1 0-3 1 1 0 0 0 1-1V7a2 2 0 0 0-2-2H4Z"/>
+  </svg>
+        <span class="brand-text" (click)="goToMain1()">Event-App</span>
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="navbar-nav" [class.active]="isMenuOpen()">
+      <a  routerLink="/tickets" routerLinkActive="active" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+             <span style="cursor: pointer;" (click)="goToTicket()">ბილეთები</span>
+      </a>
+      
+      <a routerLink="/participants" routerLinkActive="active" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+         <span style="cursor: pointer;" (click)="goToparty()">მონაწილეები</span>
+      </a>
+      
+      <a routerLink="/analytics" routerLinkActive="active" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+        </svg>
+        <span style="cursor: pointer;" (click)="goToAnalitics()">ანალიტიკა</span>
+      </a>
+
+      <a routerLink="/analytics" routerLinkActive="active" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+        </svg>
+        <span  style="cursor: pointer;" (click)="goToEvent()" >ივენთი</span>
+      </a>
+      
+        <a routerLink="/location" routerLinkActive="active" class="nav-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h9"/>
+         <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/>
+
+        </svg>
+        <span  style="cursor: pointer;" (click)="goTolocation()" >ლოკაცია</span>
+      </a>
+      <a routerLink="/adminpanel" routerLinkActive="active" class="nav-link">
+       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/>
+</svg>
+
+        <span  style="cursor: pointer;" (click)="goToadminpanel()" >Admin</span>
+      </a>
+      
+      
+      <a routerLink="/registration" routerLinkActive="active" class="nav-link" *ngIf="!isAuthenticated()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="8.5" cy="7" r="4"/>
+          <line x1="20" x2="20" y1="8" y2="14"/>
+          <line x1="23" x2="17" y1="11" y2="11"/>
+        </svg>
+        <span style="cursor: pointer;" (click)="goToRegister()">რეგისტრაცია</span>
+
+      </a>
+    </div>
+
+    <!-- User Section -->
+    <div class="navbar-actions">
+      <!-- Authenticated User -->
+      <div class="user-menu" *ngIf="isAuthenticated()">
+        <button class="user-button" (click)="toggleUserMenu()">
+          <div class="user-avatar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+<span class="user-name">
+  {{ currentUser().fullName || userrole }}
+
+  <!-- Admin -->
+  <i *ngIf="userrole === 'ADMIN'" class="bx bx-crown" style="color: gold;"></i>
+
+  <!-- Participant -->
+    <i *ngIf="userrole === 'PARTICIPANT'" class="bx bx-check" style="color: #04f304; font-size: 17px;"></i>
+</span>
+
+
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-icon" [class.rotate]="isUserMenuOpen()">
+            <polyline points="6,9 12,15 18,9"/>
+          </svg>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="user-dropdown" [class.show]="isUserMenuOpen()">
+          <div class="user-info">
+            <div class="user-avatar-large">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div class="user-details">
+   <h4>
+  {{ currentUser().fullName || userrole }}
+ <i *ngIf="userrole === 'ADMIN'" class="bx bx-crown" style="color: gold;"></i>
+     <i *ngIf="userrole === 'PARTICIPANT'" class="bx bx-check" style="color: #04f304; font-size: 25px;"></i>
+</h4>
+
+              <p>{{ currentUser().email }}</p>
+            </div>
+          </div>
+          
+          <div class="dropdown-divider"></div>
+          
+          
+          
+          <div class="dropdown-divider"></div>
+          
+          <button class="dropdown-item logout" (click)="onLogout()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16,17 21,12 16,7"/>
+              <line x1="21" x2="9" y1="12" y2="12"/>
+            </svg>
+            <span><i class='bx  bx-door-open'></i>გასვლა</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.hidden]="isMenuOpen()">
+          <line x1="3" x2="21" y1="6" y2="6"/>
+          <line x1="3" x2="21" y1="12" y2="12"/>
+          <line x1="3" x2="21" y1="18" y2="18"/>
+        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.hidden]="!isMenuOpen()">
+          <line x1="18" x2="6" y1="6" y2="18"/>
+          <line x1="6" x2="18" y1="6" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  
+  <div class="mobile-overlay" [class.show]="isMenuOpen()" (click)="closeMobileMenu()"></div>
+</nav>

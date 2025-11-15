@@ -1,0 +1,97 @@
+<div class="container">
+  <h2>ღონისძიებების სია</h2>
+
+  <!-- ღილაკი მხოლოდ ADMIN-ზე -->
+  <button *ngIf="isAdmin()" (click)="toggleForm()">
+    {{ showCreateForm ? 'დახურვა' : 'ახალი ღონისძიება' }}
+  </button>
+
+  <!-- ფორმა მხოლოდ ADMIN-ზე -->
+  <div *ngIf="showCreateForm && isAdmin()">
+    <form [formGroup]="eventForm" (ngSubmit)="createEvent()">
+      <div class="form-group">
+        <label>დასახელება:</label>
+        <input formControlName="title" />
+        <div *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched" class="error">
+          დასახელება სავალდებულოა (მინ. 3 სიმბოლო)
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>აღწერა:</label>
+        <textarea formControlName="description"></textarea>
+        <div *ngIf="eventForm.get('description')?.invalid && eventForm.get('description')?.touched" class="error">
+          აღწერა სავალდებულოა
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>დაწყების დრო:</label>
+        <input type="datetime-local" formControlName="startDate" />
+        <div *ngIf="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched" class="error">
+          დაწყების დრო სავალდებულოა
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>დასრულების დრო:</label>
+        <input type="datetime-local" formControlName="endDate" />
+        <div *ngIf="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched" class="error">
+          დასრულების დრო სავალდებულოა
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>ლოკაცია:</label>
+        <select formControlName="locationId">
+          <option value="">აირჩიეთ ლოკაცია</option>
+          <option *ngFor="let location of locations" [value]="location.id">
+            {{location.name}} - {{location.address}}, {{location.city}}
+          </option>
+        </select>
+        <div *ngIf="eventForm.get('locationId')?.invalid && eventForm.get('locationId')?.touched" class="error">
+          ლოკაცია სავალდებულოა
+        </div>
+        <div *ngIf="locations.length === 0" class="info">
+          ლოკაციები იტვირთება...
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>👤 ორგანიზატორი:</label>
+        <select class="form-select" formControlName="organizerId">
+          <option [ngValue]="null" disabled selected>აირჩიე ორგანიზატორი</option>
+          <option *ngFor="let u of users" [ngValue]="u.id">
+            {{ u.firstName }} ({{ u.email }})
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'იქმნება...' : 'შექმნა' }}
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="isLoading && !showCreateForm" class="loading">
+    იტვირთება...
+  </div>
+
+  <!-- ღონისძიებების სია -->
+  <ul *ngIf="events.length > 0">
+    <li *ngFor="let event of events">
+      <strong>{{ event.title }}</strong> - {{ event.startDate | date:'short' }}
+      <br />
+      <em>{{ event.location?.name }}</em>
+      <em class="event-id">Event ID: {{ event.id }}</em>
+    </li>
+  </ul>
+
+  <div *ngIf="events.length === 0 && !isLoading && !showCreateForm" class="no-events">
+    ღონისძიებები არ მოიძებნა
+  </div>
+</div>

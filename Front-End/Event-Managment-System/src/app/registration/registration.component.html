@@ -1,0 +1,340 @@
+<div class="auth-container">
+  <!-- ✅ მთავარი ავტორიზაციის ფორმა -->
+  <div class="auth-card" *ngIf="!showVerificationValue() && !showForgotPasswordValue() && !showResetPasswordValue()">
+    <div class="auth-header">
+      <h1>{{ isLoginMode() ? 'ავტორიზაცია' : 'რეგისტრაცია' }}</h1>
+      <p>{{ isLoginMode() ? 'მოგესალმებით!' : 'შექმენით ახალი ანგარიში' }}</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button 
+        class="tab-btn" 
+        [class.active]="isLoginMode()"
+        (click)="setLoginMode(true)">
+        შესვლა
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="!isLoginMode()"
+        (click)="setLoginMode(false)">
+        რეგისტრაცია
+      </button>
+    </div>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group" *ngIf="!isLoginMode()">
+        <label for="fullName">სრული სახელი</label>
+        <input 
+          id="fullName"
+          type="text" 
+          formControlName="fullName"
+          [class.error]="getFieldError('fullName')"
+          placeholder="შეიყვანეთ თქვენი სრული სახელი">
+        <div class="error-message" *ngIf="getFieldError('fullName')">
+          სრული სახელი აუცილებელია
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">ელ-ფოსტა</label>
+        <input 
+          id="email"
+          type="email" 
+          formControlName="email"
+          [class.error]="getFieldError('email')"
+          placeholder="შეიყვანეთ ელ-ფოსტა">
+        <div class="error-message" *ngIf="getFieldError('email')">
+          <span *ngIf="authForm.get('email')?.errors?.['required']">ელ-ფოსტა აუცილებელია</span>
+          <span *ngIf="authForm.get('email')?.errors?.['email']">შეიყვანეთ სწორი ელ-ფოსტა</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">პაროლი</label>
+        <div class="password-input">
+          <input 
+            id="password"
+           [type]="showPasswordValue() ? 'text' : 'password'"
+            formControlName="password"
+            [class.error]="getFieldError('password')"
+            placeholder="შეიყვანეთ პაროლი">
+          <button 
+            type="button" 
+            class="password-toggle"
+            (click)="togglePassword()">
+            <svg *ngIf="!showPasswordValue()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg *ngIf="showPasswordValue()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+              <line x1="2" x2="22" y1="2" y2="22"/>
+            </svg>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="getFieldError('password')">
+          <span *ngIf="authForm.get('password')?.errors?.['required']">პაროლი აუცილებელია</span>
+          <span *ngIf="authForm.get('password')?.errors?.['minlength']">პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო</span>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="!isLoginMode()">
+        <label for="confirmPassword">პაროლის დადასტურება</label>
+        <input 
+          id="confirmPassword"
+          type="password" 
+          formControlName="confirmPassword"
+          [class.error]="getFieldError('confirmPassword')"
+          placeholder="გაიმეორეთ პაროლი">
+        <div class="error-message" *ngIf="getFieldError('confirmPassword')">
+          <span *ngIf="authForm.get('confirmPassword')?.errors?.['required']">პაროლის დადასტურება აუცილებელია</span>
+          <span *ngIf="authForm.errors?.['passwordMismatch']">პაროლები არ ემთხვევა</span>
+        </div>
+      </div>
+
+      <div class="form-options" *ngIf="isLoginMode()">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="rememberMe">
+          <span class="checkmark"></span>
+          დამიმახსოვრე
+        </label>
+        <button 
+          type="button" 
+          class="forgot-password-link"
+          (click)="openForgotPassword()">
+          პაროლის აღდგენა
+        </button>
+      </div>
+
+      <button 
+        type="submit" 
+        class="submit-btn"
+        [disabled]="authForm.invalid || isLoadingValue()"
+        [class.loading]="isLoadingValue()">
+       <span *ngIf="!isLoadingValue()">{{ isLoginMode() ? 'შესვლა' : 'რეგისტრაცია' }}</span>
+        <span *ngIf="isLoadingValue()" class="loading-spinner"></span>
+      </button>
+    </form>
+  </div>
+
+  <!-- ✅ ვერიფიკაციის ფანჯარა -->
+  <div class="auth-card verification-card" *ngIf="showVerificationValue()">
+    <div class="auth-header">
+      <div class="verification-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </div>
+      <h1>ელ-ფოსტის დადასტურება</h1>
+      <p class="verification-text">
+        ვერიფიკაციის კოდი გაეგზავნა თქვენს ელ-ფოსტაზე<br>
+        <strong>{{ userEmail() }}</strong>
+      </p>
+    </div>
+
+    <form [formGroup]="verificationForm" (ngSubmit)="onVerifyEmail()" class="auth-form">
+      <div class="form-group">
+        <label for="verificationCode">ვერიფიკაციის კოდი</label>
+        <input 
+          id="verificationCode"
+          type="text" 
+          formControlName="verificationCode"
+          [class.error]="getVerificationFieldError('verificationCode')"
+          placeholder="შეიყვანეთ 4 ნიშნა კოდი"
+          maxlength="4"
+          class="verification-input">
+        <div class="error-message" *ngIf="getVerificationFieldError('verificationCode')">
+          <span *ngIf="verificationForm.get('verificationCode')?.errors?.['required']">ვერიფიკაციის კოდი აუცილებელია</span>
+          <span *ngIf="verificationForm.get('verificationCode')?.errors?.['pattern']">შეიყვანეთ 4 ნიშნა კოდი</span>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        class="submit-btn verification-btn"
+        [disabled]="verificationForm.invalid || isLoadingValue()"
+        [class.loading]="isLoadingValue()">
+        <span *ngIf="!isLoadingValue()">დადასტურება</span>
+        <span *ngIf="isLoadingValue()" class="loading-spinner"></span>
+      </button>
+    </form>
+
+    <div class="verification-actions">
+      <p>კოდი არ მიგიღიათ?</p>
+      <button 
+        type="button" 
+        class="resend-btn"
+        (click)="resendVerificationCode()"
+        [disabled]="isLoadingValue()">
+        ხელახალი გაგზავნა
+      </button>
+      
+      <button 
+        type="button" 
+        class="back-btn"
+        (click)="goBackToRegistration()">
+        ← უკან დაბრუნება
+      </button>
+    </div>
+  </div>
+
+  <!-- ✅ პაროლის აღდგენის ფანჯარა -->
+  <div class="auth-card forgot-password-card" *ngIf="showForgotPasswordValue()">
+    <div class="auth-header">
+      <div class="forgot-password-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <circle cx="12" cy="16" r="1"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <h1>პაროლის აღდგენა</h1>
+      <p class="forgot-password-text">
+        შეიყვანეთ თქვენი ელ-ფოსტა პაროლის აღდგენის ინსტრუქციების მისაღებად
+      </p>
+    </div>
+
+    <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()" class="auth-form">
+      <div class="form-group">
+        <label for="forgotEmail">ელ-ფოსტა</label>
+        <input 
+          id="forgotEmail"
+          type="email" 
+          formControlName="email"
+          [class.error]="getForgotPasswordFieldError('email')"
+          placeholder="შეიყვანეთ ელ-ფოსტა">
+        <div class="error-message" *ngIf="getForgotPasswordFieldError('email')">
+          <span *ngIf="forgotPasswordForm.get('email')?.errors?.['required']">ელ-ფოსტა აუცილებელია</span>
+          <span *ngIf="forgotPasswordForm.get('email')?.errors?.['email']">შეიყვანეთ სწორი ელ-ფოსტა</span>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        class="submit-btn forgot-password-btn"
+        [disabled]="forgotPasswordForm.invalid || isLoadingValue()"
+        [class.loading]="isLoadingValue()">
+        <span *ngIf="!isLoadingValue()">აღდგენის კოდის გაგზავნა</span>
+        <span *ngIf="isLoadingValue()" class="loading-spinner"></span>
+      </button>
+    </form>
+
+    <div class="forgot-password-actions">
+      <button 
+        type="button" 
+        class="back-btn"
+        (click)="goBackToLogin()">
+        ← შესვლაზე დაბრუნება
+      </button>
+    </div>
+  </div>
+
+  <!-- ✅ პაროლის აღდგენის კოდის ვერიფიკაცია -->
+  <div class="auth-card reset-password-card" *ngIf="showResetPasswordValue()">
+    <div class="auth-header">
+      <div class="reset-password-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+        </svg>
+      </div>
+      <h1>ახალი პაროლის შექმნა</h1>
+      <p class="reset-password-text">
+        შეიყვანეთ აღდგენის კოდი და ახალი პაროლი<br>
+        <strong>{{ resetEmail() }}</strong>
+      </p>
+    </div>
+
+    <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()" class="auth-form">
+      <div class="form-group">
+        <label for="resetCode">აღდგენის კოდი</label>
+        <input 
+          id="resetCode"
+          type="text" 
+          formControlName="resetCode"
+          [class.error]="getResetPasswordFieldError('resetCode')"
+          placeholder="შეიყვანეთ 6 ნიშნა კოდი"
+          maxlength="6"
+          class="verification-input">
+        <div class="error-message" *ngIf="getResetPasswordFieldError('resetCode')">
+          <span *ngIf="resetPasswordForm.get('resetCode')?.errors?.['required']">აღდგენის კოდი აუცილებელია</span>
+          <span *ngIf="resetPasswordForm.get('resetCode')?.errors?.['pattern']">შეიყვანეთ 6 ნიშნა კოდი</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="newPassword">ახალი პაროლი</label>
+        <div class="password-input">
+          <input 
+            id="newPassword"
+            [type]="showNewPasswordValue() ? 'text' : 'password'"
+            formControlName="newPassword"
+            [class.error]="getResetPasswordFieldError('newPassword')"
+            placeholder="შეიყვანეთ ახალი პაროლი">
+          <button 
+            type="button" 
+            class="password-toggle"
+            (click)="toggleNewPassword()">
+            <svg *ngIf="!showNewPasswordValue()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg *ngIf="showNewPasswordValue()" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+              <line x1="2" x2="22" y1="2" y2="22"/>
+            </svg>
+          </button>
+        </div>
+        <div class="error-message" *ngIf="getResetPasswordFieldError('newPassword')">
+          <span *ngIf="resetPasswordForm.get('newPassword')?.errors?.['required']">ახალი პაროლი აუცილებელია</span>
+          <span *ngIf="resetPasswordForm.get('newPassword')?.errors?.['minlength']">პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmNewPassword">ახალი პაროლის დადასტურება</label>
+        <input 
+          id="confirmNewPassword"
+          type="password" 
+          formControlName="confirmNewPassword"
+          [class.error]="getResetPasswordFieldError('confirmNewPassword')"
+          placeholder="გაიმეორეთ ახალი პაროლი">
+        <div class="error-message" *ngIf="getResetPasswordFieldError('confirmNewPassword')">
+          <span *ngIf="resetPasswordForm.get('confirmNewPassword')?.errors?.['required']">პაროლის დადასტურება აუცილებელია</span>
+          <span *ngIf="resetPasswordForm.errors?.['passwordMismatch']">პაროლები არ ემთხვევა</span>
+        </div>
+      </div>
+
+      <button 
+        type="submit" 
+        class="submit-btn reset-password-btn"
+        [disabled]="resetPasswordForm.invalid || isLoadingValue()"
+        [class.loading]="isLoadingValue()">
+        <span *ngIf="!isLoadingValue()">პაროლის შეცვლა</span>
+        <span *ngIf="isLoadingValue()" class="loading-spinner"></span>
+      </button>
+    </form>
+
+    <div class="reset-password-actions">
+      <p>კოდი არ მიგიღიათ?</p>
+      <button 
+        type="button" 
+        class="resend-btn"
+        (click)="resendResetCode()"
+        [disabled]="isLoadingValue()">
+        ხელახალი გაგზავნა
+      </button>
+      
+      <button 
+        type="button" 
+        class="back-btn"
+        (click)="goBackToLogin()">
+        ← შესვლაზე დაბრუნება
+      </button>
+    </div>
+  </div>
+</div>

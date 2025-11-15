@@ -1,0 +1,107 @@
+<div class="admin-panel">
+  <div class="header">
+    <h2>
+    <i class='bx  bx-crown' style="font-size: 30px;"  ></i> 
+      Admin Panel
+    </h2>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="error" class="alert alert-error">
+    <i class="fas fa-exclamation-triangle"></i>
+    {{ error }}
+    <button (click)="clearMessages()" class="close-btn">&times;</button>
+  </div>
+
+  <div *ngIf="success" class="alert alert-success">
+    <i class="fas fa-check-circle"></i>
+    {{ success }}
+    <button (click)="clearMessages()" class="close-btn">&times;</button>
+  </div>
+
+  <!-- Actions Section -->
+  <div class="actions-section">
+    <div class="action-card">
+      <h3>
+ <i class='bx  bx-check'  style="color: rgb(15, 250, 15); font-size: 30px;" ></i> 
+        Add Admin Role
+      </h3>
+      <div class="input-group">
+        <input 
+          type="email" 
+          [(ngModel)]="newAdminEmail"
+          placeholder="Enter email address"
+          class="form-input"
+          [disabled]="loading">
+        <button 
+          (click)="assignAdmin()" 
+          [disabled]="loading || !newAdminEmail.trim()"
+          class="btn btn-primary">
+          <i class="fas fa-user-plus" *ngIf="!loading"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="loading"></i>
+          Assign Admin
+        </button>
+      </div>
+    </div>
+
+    <div class="action-card">
+      <h3>
+        <i class='bx  bx-x' style="color: rgb(245, 33, 5); font-size: 30px;"   ></i> 
+        Remove Admin Role
+      </h3>
+      <div class="input-group">
+        <input 
+          type="email" 
+          [(ngModel)]="removeAdminEmail"
+          placeholder="Enter email address"
+          class="form-input"
+          [disabled]="loading">
+        <button 
+          (click)="removeAdmin()" 
+          [disabled]="loading || !removeAdminEmail.trim()"
+          class="btn btn-danger">
+          <i class="fas fa-user-minus" *ngIf="!loading"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="loading"></i>
+          Remove Admin
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admins List -->
+  <div class="admins-section">
+    <div class="section-header">
+      <h3>
+        <i class="fas fa-users"></i>
+        Current Admins ({{ admins.length }})
+      </h3>
+      <button (click)="loadAdmins()" class="btn btn-secondary" [disabled]="loading">
+        <i class="fas fa-sync-alt" [class.fa-spin]="loading"></i>
+        Refresh
+      </button>
+    </div>
+
+    <div *ngIf="loading && admins.length === 0" class="loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      Loading admins...
+    </div>
+
+    <div *ngIf="admins.length === 0 && !loading" class="no-data">
+      <i class="fas fa-users"></i>
+      <p>No admins found</p>
+    </div>
+
+    <div class="admins-grid" *ngIf="admins.length > 0">
+      <div *ngFor="let admin of admins" class="admin-card">
+        <div class="admin-avatar">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="admin-info">
+          <h4>{{ admin.firstName }} {{ admin.lastName }}</h4>
+          <p class="email">{{ admin.email }}</p>
+          <span class="role-badge">{{ admin.role }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

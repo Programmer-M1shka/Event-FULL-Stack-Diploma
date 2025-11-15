@@ -1,0 +1,328 @@
+<div class="analytics-container">
+
+  <div class="analytics-header">
+    <h1>ანალიტიკა და სტატისტიკა</h1>
+    <p>ღონისძიების მონაცემების ანალიზი და მხარდაჭერა</p>
+  </div>
+
+
+  <div class="summary-cards">
+    <div class="card summary-card">
+      <div class="card-header">
+        <h3>მთლიანი შემოსავალი</h3>
+        <i class="icon-money"></i>
+      </div>
+      <div class="card-body">
+        <div class="amount">{{formatCurrency(getTotalRevenue())}}</div>
+      </div>
+    </div>
+
+    <div class="card summary-card">
+      <div class="card-header">
+        <h3>გაყიდული ბილეთები</h3>
+        <i class="icon-ticket"></i>
+      </div>
+      <div class="card-body">
+        <div class="amount">{{getTotalTicketsSold()}}</div>
+      </div>
+    </div>
+
+    <div class="card summary-card">
+      <div class="card-header">
+        <h3>საშუალო დასწრება</h3>
+        <i class="icon-users"></i>
+      </div>
+      <div class="card-body">
+        <div class="amount">{{formatPercentage(getAverageAttendanceRate())}}</div>
+      </div>
+    </div>
+
+    <div class="card summary-card" *ngIf="getTopSpender()">
+      <div class="card-header">
+        <h3>ყველაზე მეტი მომხმარებელი</h3>
+        <i class="icon-crown"></i>
+      </div>
+      <div class="card-body">
+        <div class="amount">{{getTopSpender()?.userName}}</div>
+        <div class="sub-amount">{{formatCurrency(getTopSpender()!.totalSpent)}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="analytics-tabs">
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'sales'"
+      (click)="setActiveTab('sales')">
+      გაყიდვები
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'attendance'"
+      (click)="setActiveTab('attendance')">
+      დასწრება
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'users'"
+      (click)="setActiveTab('users')">
+      მომხმარებლები
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'trends'"
+      (click)="setActiveTab('trends')">
+      ტრენდები
+    </button>
+  </div>
+
+  <!-- Sales Analytics Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'sales'">
+    <div class="filters-section">
+      <div class="filter-group">
+        <label>თარიღი დან:</label>
+        <input 
+          type="date" 
+          [(ngModel)]="startDate" 
+          (change)="onDateRangeChange()"
+          class="date-input">
+      </div>
+      <div class="filter-group">
+        <label>თარიღი მდე:</label>
+        <input 
+          type="date" 
+          [(ngModel)]="endDate" 
+          (change)="onDateRangeChange()"
+          class="date-input">
+      </div>
+      <div class="filter-group">
+        <label>ტოპ ღონისძიებების რაოდენობა:</label>
+        <select 
+          [(ngModel)]="topEventsLimit" 
+          (change)="onTopEventsLimitChange()"
+          class="select-input">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="analytics-grid">
+      <!-- Sales Summary -->
+      <div class="card">
+        <div class="card-header">
+          <h3>გაყიდვების ჯამური სტატისტიკა</h3>
+        </div>
+        <div class="card-body">
+          <div class="loading" *ngIf="loadingSales">მონაცემები იტვირთება...</div>
+          <div class="table-container" *ngIf="!loadingSales">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ღონისძიება</th>
+                  <th>შემოსავალი</th>
+                  <th>ბილეთები</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of salesSummary">
+                  <td>{{item.eventTitle}}</td>
+                  <td>{{formatCurrency(item.totalSales)}}</td>
+                  <td>{{item.ticketsSold}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Sales -->
+      <div class="card">
+        <div class="card-header">
+          <h3>ყოველდღიური გაყიდვები</h3>
+        </div>
+        <div class="card-body">
+          <div class="loading" *ngIf="loadingSales">მონაცემები იტვირთება...</div>
+          <div class="table-container" *ngIf="!loadingSales">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>თარიღი</th>
+                  <th>შემოსავალი</th>
+                  <th>ბილეთები</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sale of dailySales">
+                  <td>{{formatDate(sale.date)}}</td>
+                  <td>{{formatCurrency(sale.totalSales)}}</td>
+                  <td>{{sale.ticketCount}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Events -->
+      <div class="card">
+        <div class="card-header">
+          <h3>ყველაზე წარმატებული ღონისძიებები</h3>
+        </div>
+        <div class="card-body">
+          <div class="loading" *ngIf="loadingSales">მონაცემები იტვირთება...</div>
+          <div class="table-container" *ngIf="!loadingSales">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ღონისძიება</th>
+                  <th>შემოსავალი</th>
+                  <th>ბილეთები</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let event of topEvents; let i = index" [class.top-rank]="i < 3">
+                  <td>
+                    <span class="rank" *ngIf="i < 3">{{i + 1}}</span>
+                    {{event.eventTitle}}
+                  </td>
+                  <td>{{formatCurrency(event.totalRevenue)}}</td>
+                  <td>{{event.ticketsSold}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attendance Analytics Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'attendance'">
+    <div class="analytics-grid">
+      <div class="card full-width">
+        <div class="card-header">
+          <h3>დასწრების სტატისტიკა</h3>
+        </div>
+        <div class="card-body">
+          <div class="loading" *ngIf="loadingAttendance">მონაცემები იტვირთება...</div>
+          <div class="table-container" *ngIf="!loadingAttendance">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ღონისძიება</th>
+                  <th>თარიღი</th>
+                  <th>რეგისტრირებული</th>
+                  <th>დამსწრე</th>
+                  <th>დასწრების %</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let stat of attendanceStats">
+                  <td>{{stat.eventTitle}}</td>
+                  <td>{{formatDate(stat.eventDate)}}</td>
+                  <td>{{stat.totalRegistered}}</td>
+                  <td>{{stat.totalAttended}}</td>
+                  <td>
+                    <span class="attendance-rate" [class.high]="stat.attendanceRate >= 80" [class.medium]="stat.attendanceRate >= 60 && stat.attendanceRate < 80" [class.low]="stat.attendanceRate < 60">
+                      {{formatPercentage(stat.attendanceRate)}}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Activity Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'users'">
+    <div class="filters-section">
+      <div class="filter-group">
+        <label>მომხმარებლის ID (ფილტრი):</label>
+        <input 
+          type="number" 
+          [(ngModel)]="selectedUserId" 
+          (change)="onUserFilterChange()"
+          placeholder="ყველა მომხმარებელი"
+          class="number-input">
+      </div>
+    </div>
+
+    <div class="analytics-grid">
+      <div class="card full-width">
+        <div class="card-header">
+          <h3>მომხმარებელთა აქტივობა</h3>
+        </div>
+        <div class="card-body">
+          <div class="loading" *ngIf="loadingUserActivity">მონაცემები იტვირთება...</div>
+          <div class="table-container" *ngIf="!loadingUserActivity">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>მომხმარებელი</th>
+                  <th>შესყიდვები</th>
+                  <th>მთლიანი ხარჯი</th>
+                  <th>ღონისძიებები</th>
+                  <th>საშუალო ხარჯი</th>
+                  <th>ბოლო შესყიდვა</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of userActivity">
+                  <td>{{user.userName}}</td>
+                  <td>{{user.totalPurchases}}</td>
+                  <td>{{formatCurrency(user.totalSpent)}}</td>
+                  <td>{{user.eventsAttended}}</td>
+                  <td>{{formatCurrency(user.averageSpending)}}</td>
+                  <td>{{formatDate(user.lastPurchase)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly Trends Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'trends'">
+    <div class="analytics-grid">
+      <div class="card full-width">
+        <div class="card-header">
+          <h3>ყოველთვიური ტრენდები</h3>
+        </div>
+        <div class="card-body">
+          <div class="loading" *ngIf="loadingTrends">მონაცემები იტვირთება...</div>
+          <div class="table-container" *ngIf="!loadingTrends">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>წელი</th>
+                  <th>თვე</th>
+                  <th>გაყიდვები</th>
+                  <th>ბილეთები</th>
+                  <th>უნიკალური მომხმარებლები</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let trend of monthlyTrends">
+                  <td>{{trend.year}}</td>
+                  <td>{{trend.month}}</td>
+                  <td>{{formatCurrency(trend.totalSales)}}</td>
+                  <td>{{trend.ticketsSold}}</td>
+                  <td>{{trend.uniqueCustomers}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
