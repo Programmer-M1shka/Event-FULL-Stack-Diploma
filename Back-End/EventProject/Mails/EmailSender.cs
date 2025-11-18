@@ -12,9 +12,9 @@ namespace EventProject.Mails
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
 
-            smtpClient.Credentials = new NetworkCredential("xaritona12@gmail.com", "wvpe quan khsm ejhq\r\n"); 
+            smtpClient.Credentials = new NetworkCredential("your mail", "your code"); 
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("xaritona12@gmail.com");
+            mailMessage.From = new MailAddress("your mail");
 
             mailMessage.To.Add(to);
             mailMessage.Subject = subject;
